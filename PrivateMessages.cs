@@ -97,6 +97,11 @@ namespace Oxide.Plugins
 
             if (args.Length > 1)
             {
+                if (String.Join(" ", args).Length > configData.MessageCharacterLimit) {
+                	player.Reply(Lang("MessageTooLong"));
+                	return;
+                };
+                
                 var name = args[0];
                 var p = FindPlayer(name);
                 if (p != null)
@@ -124,11 +129,6 @@ namespace Oxide.Plugins
                     }
 
                     var msg = RemoveRichText(IsUFilter(args));
-                    
-                    if (msg.Length > configData.MessageCharacterLimit) {
-                    	player.Reply(Lang("MessageTooLong"));
-                    	return;
-                    };
 
                     if (Interface.Oxide.CallHook("OnPMProcessed", player, p, msg) != null)
                     {
@@ -166,6 +166,11 @@ namespace Oxide.Plugins
 
             if (args.Length > 0)
             {
+                if (String.Join(" ", args).Length > configData.MessageCharacterLimit) {
+                	player.Reply(Lang("MessageTooLong"));
+                	return;
+                };
+                
                 string steamid;
                 if (pmHistory.TryGetValue(player.Id, out steamid))
                 {
